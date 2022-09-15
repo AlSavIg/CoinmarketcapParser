@@ -32,6 +32,7 @@ async def request_to_data(start: int, session: ClientSession, _sheet):
         params=params_copy
     )
     json_ = json.loads(await response.text())['data']['cryptoCurrencyList']
+    main_url = 'https://coinmarketcap.com/currencies/'
     for item in json_:
         name = item['name']
         rank = item['cmcRank']
@@ -39,8 +40,9 @@ async def request_to_data(start: int, session: ClientSession, _sheet):
         ath = item['ath']
         atl = item['atl']
         coefficient = get_coefficient(rank, price, ath, atl)
+        link = main_url + item['slug'] + '/'
         write_to_excel(
-            (name, rank, coefficient),
+            (name, rank, coefficient, link),
             rank + 1,
             _sheet
         )
@@ -67,7 +69,7 @@ def exec_time_decorator(func):
 
 def format_col_width(sheet):
     import string
-    for letter in string.ascii_uppercase[:3]:
+    for letter in string.ascii_uppercase[:4]:
         sheet.column_dimensions[letter].width = 30
 
 
@@ -76,7 +78,8 @@ async def get_data() -> str:
     titles = (
         'name',
         'rank',
-        'coefficient'
+        'coefficient',
+        'link'
     )
 
     file_name = f'{datetime.datetime.now().strftime("%d_%m_%Y_%H_%M_%S")}_coinmarketcap.xlsx'
@@ -91,7 +94,7 @@ async def get_data() -> str:
         ]
         await asyncio.gather(*tasks)
 
-    ws.auto_filter.ref = f'A1:C{last_item_num + 1}'
+    ws.auto_filter.ref = f'A1:D{last_item_num + 1}'
     ws.auto_filter.add_sort_condition(f'C2:C{last_item_num + 1}')
 
     format_col_width(sheet=ws)
