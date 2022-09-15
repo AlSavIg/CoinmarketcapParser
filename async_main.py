@@ -40,7 +40,7 @@ async def request_to_data(start: int, session: ClientSession, _sheet):
         atl = item['atl']
         coefficient = get_coefficient(rank, price, ath, atl)
         write_to_excel(
-            (name, coefficient),
+            (name, rank, coefficient),
             rank + 1,
             _sheet
         )
@@ -67,14 +67,15 @@ def exec_time_decorator(func):
 
 def format_col_width(sheet):
     import string
-    for letter in string.ascii_uppercase[:2]:
-        sheet.column_dimensions[letter].width = 40
+    for letter in string.ascii_uppercase[:3]:
+        sheet.column_dimensions[letter].width = 30
 
 
 @exec_time_decorator
 async def get_data() -> str:
     titles = (
         'name',
+        'rank',
         'coefficient'
     )
 
@@ -90,8 +91,8 @@ async def get_data() -> str:
         ]
         await asyncio.gather(*tasks)
 
-    ws.auto_filter.ref = f'A1:B{last_item_num + 1}'
-    ws.auto_filter.add_sort_condition(f'B2:B{last_item_num + 1}')
+    ws.auto_filter.ref = f'A1:C{last_item_num + 1}'
+    ws.auto_filter.add_sort_condition(f'C2:C{last_item_num + 1}')
 
     format_col_width(sheet=ws)
 
