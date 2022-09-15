@@ -27,9 +27,9 @@ async def cmd_answer(message: types.Message):
     await os.remove(file)
 
 
-def main():
+def activate_bot():
     executor.start_polling(dp, skip_updates=True)
 
 
 if __name__ == "__main__":
-    main()
+    activate_bot()

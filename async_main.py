@@ -39,7 +39,7 @@ async def request_to_data(start: int, session: ClientSession, _sheet):
         price = item['quotes'][2]['price']  # USD
         ath = item['ath']
         atl = item['atl']
-        coefficient = get_coefficient(rank, price, ath, atl)
+        coefficient = get_coefficient(price, ath, atl)
         link = main_url + item['slug'] + '/'
         write_to_excel(
             (name, rank, coefficient, link),
@@ -48,8 +48,11 @@ async def request_to_data(start: int, session: ClientSession, _sheet):
         )
 
 
-def get_coefficient(rank, price, ath, atl):
-    return (ath * atl / price ** 2) / rank if price != 0 else 'PRICE EQUALS ZERO'
+def get_coefficient(price, ath, atl):
+    if price == 0:
+        return 'PRICE EQUALS ZERO'
+    else:
+        return (ath * atl / price ** 2) if atl > 0 else (ath / price)
 
 
 def write_to_excel(vals, row, _sheet):
