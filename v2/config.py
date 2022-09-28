@@ -3,9 +3,9 @@ headers = {
     'accept': 'application/json, text/plain, */*',
     'accept-language': 'ru,en;q=0.9',
     'cache-control': 'no-cache',
-    'origin': 'https://coinmarketcap.com',
+    # 'origin': 'https://coinmarketcap.com',
     'platform': 'web',
-    'referer': 'https://coinmarketcap.com/',
+    # 'referer': 'https://coinmarketcap.com/',
     'sec-ch-ua': '" Not A;Brand";v="99", "Chromium";v="102", "Yandex";v="22"',
     'sec-ch-ua-mobile': '?0',
     'sec-ch-ua-platform': '"Windows"',
@@ -14,7 +14,7 @@ headers = {
     'sec-fetch-site': 'same-site',
     'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '
                   'Chrome/102.0.5005.167 YaBrowser/22.7.5.1027 Yowser/2.5 Safari/537.36',
-    'x-request-id': '7d160e841360481c8d98791b83e3bdb5',
+    # 'x-request-id': '7d160e841360481c8d98791b83e3bdb5',
 }
 
 params = {

@@ -1,6 +1,8 @@
 import asyncio
 import datetime
 import json
+from typing import Any, Tuple
+from openpyxl import Workbook
 from config import url, headers, params
 import openpyxl
 from aiohttp import ClientSession
@@ -35,12 +37,15 @@ async def request_to_data(start: int, session: ClientSession, _sheet):
     main_url = 'https://coinmarketcap.com/currencies/'
     for item in json_:
         name = item['name']
-        rank = item['cmcRank']
-        price = item['quotes'][2]['price']  # USD
-        ath = item['ath']
-        atl = item['atl']
+        try:
+            rank = item['cmcRank']
+            price = item['quotes'][2]['price']  # USD
+            ath = item['ath']
+            atl = item['atl']
+            link = main_url + item['slug'] + '/'
+        except KeyError:
+            price = ath = atl = rank = link = None
         coefficient = get_coefficient(price, ath, atl)
-        link = main_url + item['slug'] + '/'
         write_to_excel(
             (name, rank, coefficient, link),
             rank + 1,
@@ -72,16 +77,16 @@ def exec_time_decorator(func):
 
 def format_col_width(sheet):
     import string
-    for letter in string.ascii_uppercase[:4]:
+    for letter in string.ascii_uppercase[:7]:
         sheet.column_dimensions[letter].width = 30
 
 
 @exec_time_decorator
-async def get_data() -> str:
+async def get_data() -> tuple[Workbook, Any, int, str]:
     titles = (
         'name',
         'rank',
-        'coefficient',
+        'coef_on_coinmarketcap',
         'link'
     )
 
@@ -97,14 +102,13 @@ async def get_data() -> str:
         ]
         await asyncio.gather(*tasks)
 
-    ws.auto_filter.ref = f'A1:D{last_item_num + 1}'
+    ws.auto_filter.ref = f'A1:E{last_item_num + 1}'
     ws.auto_filter.add_sort_condition(f'C2:C{last_item_num + 1}')
 
     format_col_width(sheet=ws)
+    # wb.save(filename=file_name)
 
-    wb.save(filename=file_name)
-
-    return file_name
+    return wb, ws, last_item_num, file_name
 
 
 async def main():

@@ -2,7 +2,7 @@ from aiogram import Bot, Dispatcher, executor, types
 from config import token
 from aiogram.dispatcher.filters import Text
 from aiofiles import os
-import async_main
+import extended_parser
 
 bot = Bot(token=token)
 dp = Dispatcher(bot)
@@ -22,7 +22,7 @@ async def cmd_start(message: types.Message):
 @dp.message_handler(Text(equals="Собрать данные"))
 async def cmd_answer(message: types.Message):
     await message.answer('Пожалуйста, ожидайте, идет сбор данных')
-    file = await async_main.get_data()
+    file = await extended_parser.get_data()
     await message.answer_document(open(file, 'rb'))
     await os.remove(file)
 
