@@ -45,7 +45,7 @@ async def request_to_data(start: int, session: ClientSession, _sheet):
             link = main_url + item['slug'] + '/'
         except KeyError:
             price = ath = atl = rank = link = None
-        coefficient = get_coefficient(price, ath, atl)
+        coefficient = get_coefficient(price, ath, atl, rank)
         write_to_excel(
             (name, rank, coefficient, link),
             rank + 1,
@@ -53,11 +53,11 @@ async def request_to_data(start: int, session: ClientSession, _sheet):
         )
 
 
-def get_coefficient(price, ath, atl):
+def get_coefficient(price, ath, atl, rank):
     if price == 0:
         return 'PRICE EQUALS ZERO'
     else:
-        return (ath * atl / price ** 2) if atl > 0 else (ath / price)
+        return (atl / price / rank) if atl > 0 and atl is not None else 1 / rank
 
 
 def write_to_excel(vals, row, _sheet):
