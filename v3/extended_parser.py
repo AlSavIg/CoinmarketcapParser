@@ -2,7 +2,7 @@ import json
 import time
 import requests
 from ext_config import headers, data, post_url
-from fake_useragent import UserAgent
+from extended_user_agent import ExtendedUserAgent
 import async_main
 import asyncio
 from async_main import exec_time_decorator, get_coefficient
@@ -13,9 +13,9 @@ def format_json_str(json_data):
 
 
 def get_coins_info():
-    ua = UserAgent()
+    ua = ExtendedUserAgent()
     json_data = json.loads(data)
-    headers.update({'user-agent': ua.random})
+    headers.update({'user-agent': ua.random_fresh_ua})
 
     last_elem = int(requests.post(url=post_url,
                                   headers=headers,

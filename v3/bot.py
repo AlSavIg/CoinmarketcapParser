@@ -28,7 +28,7 @@ async def cmd_answer(message: types.Message):
 
 
 def activate_bot():
-    executor.start_polling(dp, skip_updates=True)
+    executor.start_polling(dp, skip_updates=False)
 
 
 if __name__ == "__main__":
