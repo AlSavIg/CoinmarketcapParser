@@ -1,0 +1,5 @@
+venv
+out
+__pycache__
+.idea
+v3/__pycache__
