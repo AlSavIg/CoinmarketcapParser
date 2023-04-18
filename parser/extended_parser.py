@@ -1,11 +1,10 @@
 import json
-import time
 import requests
-from ext_config import headers, data, post_url
+from bot.ext_config import headers, data, post_url
 from extended_user_agent import ExtendedUserAgent
 import async_main
 import asyncio
-from async_main import exec_time_decorator, get_coefficient
+from async_main import exec_time_decorator
 
 
 def format_json_str(json_data):

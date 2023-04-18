@@ -1,5 +1,5 @@
 venv
-out
+#out
 __pycache__
 .idea
-v3/__pycache__
+*/__pycache__

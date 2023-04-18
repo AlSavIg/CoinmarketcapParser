@@ -1,4 +1,4 @@
-from bot import activate_bot
+from .bot import activate_bot
 
 
 if __name__ == '__main__':

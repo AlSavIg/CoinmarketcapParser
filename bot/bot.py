@@ -1,8 +1,8 @@
 from aiogram import Bot, Dispatcher, executor, types
-from config import token
+from parser.config import token
 from aiogram.dispatcher.filters import Text
 from aiofiles import os
-import extended_parser
+from parser import extended_parser
 
 bot = Bot(token=token)
 dp = Dispatcher(bot)
