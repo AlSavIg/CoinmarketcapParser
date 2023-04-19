@@ -1,11 +1,12 @@
 import asyncio
 import datetime
 import json
-from typing import Any, Tuple
+from typing import Any
 from openpyxl import Workbook
-from config import url, headers, params
 import openpyxl
 from aiohttp import ClientSession
+
+from .config import url, headers, params
 
 
 def create_excel_sheet(titles: tuple):

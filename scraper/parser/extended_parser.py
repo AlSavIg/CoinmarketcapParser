@@ -1,10 +1,10 @@
 import json
 import requests
-from bot.ext_config import headers, data, post_url
-from extended_user_agent import ExtendedUserAgent
-import async_main
 import asyncio
-from async_main import exec_time_decorator
+
+from .ext_config import headers, data, post_url
+from .extended_user_agent import ExtendedUserAgent
+from ..parser import async_main
 
 
 def format_json_str(json_data):
@@ -51,7 +51,7 @@ def read_all_names_from_excel(ws, last_item_num):
     }
 
 
-@exec_time_decorator
+@async_main.exec_time_decorator
 async def get_data() -> str:
     wb, ws, last_item_num, file_name = await async_main.get_data()
 

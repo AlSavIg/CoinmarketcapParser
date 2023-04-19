@@ -1,4 +1,5 @@
 import scraper
 
+
 if __name__ == '__main__':
-    scraper.activate_gui()
+    scraper.activate_bot()
