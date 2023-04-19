@@ -33,6 +33,7 @@ class BotUI(QWidget):
 
         # Set background image
         self.background_label = QLabel(self)
+        # self.background_pixmap = QPixmap(f"jpg/background.jpg")
         self.background_pixmap = QPixmap(f"{os.path.dirname(os.path.abspath(__file__))}/jpg/background.jpg")
         self.background_label.setPixmap(self.background_pixmap)
 
@@ -123,6 +124,7 @@ class BotUI(QWidget):
 
 def activate_gui():
     app = QApplication(sys.argv)
+    # app.setWindowIcon(QtGui.QIcon(f"jpg/icon.jpg"))
     app.setWindowIcon(QtGui.QIcon(f"{os.path.dirname(os.path.abspath(__file__))}/jpg/icon.jpg"))
     bot_ui = BotUI()
     bot_ui.show()
