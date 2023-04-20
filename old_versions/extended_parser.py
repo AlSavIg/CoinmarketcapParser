@@ -1,10 +1,10 @@
 import json
 import requests
-from bot.ext_config import headers, data, post_url
-from extended_user_agent import ExtendedUserAgent
-import async_main
 import asyncio
-from async_main import exec_time_decorator
+
+from scraper.parser.base_classes.config.tradingview_config import headers, data, url
+from scraper.parser.base_classes.extended_user_agent import ExtendedUserAgent
+from old_versions import async_main
 
 
 def format_json_str(json_data):
@@ -16,12 +16,12 @@ def get_coins_info():
     json_data = json.loads(data)
     headers.update({'user-agent': ua.random_fresh_ua})
 
-    last_elem = int(requests.post(url=post_url,
+    last_elem = int(requests.post(url=url,
                                   headers=headers,
                                   data=format_json_str(json_data)).json()['totalCount'])
     json_data.update({'range': [0, last_elem]})
 
-    return requests.post(url=post_url,
+    return requests.post(url=url,
                          headers=headers,
                          data=format_json_str(json_data)).json()
 
@@ -51,7 +51,7 @@ def read_all_names_from_excel(ws, last_item_num):
     }
 
 
-@exec_time_decorator
+@async_main.exec_time_decorator
 async def get_data() -> str:
     wb, ws, last_item_num, file_name = await async_main.get_data()
 
@@ -67,14 +67,14 @@ async def get_data() -> str:
     for coin in kucoin_coins_data:
         for key, val in all_names_from_excel.items():
             if key.lower() == coin['name'].lower().strip():
-                # ws.cell(row=row_num, column=5).value = get_coefficient(
+                # _ws.cell(row=row_num, column=5).value = get_coefficient(
                 #     coin['price'],
                 #     coin['ath'],
                 #     coin['atl']
                 # )
                 ws.cell(row=val, column=5).value = 'KuCoin'
                 # link = f'{link_body}/{coin["name_for_link"]}/?exchange={coin["exchange_for_link"]}'
-                # ws.cell(row=row_num, column=6).value = link
+                # _ws.cell(row=row_num, column=6).value = link
 
     wb.save(filename=file_name)
     return file_name

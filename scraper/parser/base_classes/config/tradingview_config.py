@@ -33,4 +33,4 @@ data = '{"filter":[{"left":"name","operation":"nempty"}],"options":{"active_symb
        '"minmove2"],"sort":{"sortBy":"name","sortOrder":"asc"},"range":[0,150]}'
 
 
-post_url = 'https://scanner.tradingview.com/crypto/scan'
+url = 'https://scanner.tradingview.com/crypto/scan'

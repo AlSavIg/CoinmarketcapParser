@@ -1,5 +1,7 @@
 venv
-#out
 __pycache__
 .idea
 */__pycache__
+output
+old_versions
+*.log

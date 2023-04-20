@@ -1,11 +1,12 @@
 import asyncio
 import datetime
 import json
-from typing import Any, Tuple
+from typing import Any
 from openpyxl import Workbook
-from config import url, headers, params
 import openpyxl
 from aiohttp import ClientSession
+
+from scraper.parser.base_classes.config.coinmarket_config import url, headers, params
 
 
 def create_excel_sheet(titles: tuple):
@@ -106,7 +107,7 @@ async def get_data() -> tuple[Workbook, Any, int, str]:
     ws.auto_filter.add_sort_condition(f'C2:C{last_item_num + 1}')
 
     format_col_width(sheet=ws)
-    # wb.save(filename=file_name)
+    # _wb.save(filename=file_name)
 
     return wb, ws, last_item_num, file_name
 
