@@ -2,11 +2,13 @@ from aiogram import Bot, Dispatcher, executor, types
 from aiogram.dispatcher.filters import Text
 from aiofiles import os
 
-from ..parser import extended_parser
+from ..parser import ParserInterface
 from .bot_config import token
 
 bot = Bot(token=token)
 dp = Dispatcher(bot)
+
+parser_interface = ParserInterface()
 
 
 @dp.message_handler(commands="start")
@@ -23,7 +25,10 @@ async def cmd_start(message: types.Message):
 @dp.message_handler(Text(equals="Собрать данные"))
 async def cmd_answer(message: types.Message):
     await message.answer('Пожалуйста, ожидайте, идет сбор данных')
-    file = await extended_parser.get_data()
+
+    parser_interface.set_telegram_data(token=token, chat_id=message.chat.id)
+    file = await parser_interface.get_filename()
+
     await message.answer_document(open(file, 'rb'))
     await os.remove(file)
 

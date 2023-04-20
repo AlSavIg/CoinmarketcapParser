@@ -1,1 +1,1 @@
-from ..parser import extended_parser
+from .create_excel import ParserInterface
