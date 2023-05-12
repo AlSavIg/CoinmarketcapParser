@@ -26,7 +26,7 @@ async def cmd_start(message: types.Message):
 async def cmd_answer(message: types.Message):
     await message.answer('Пожалуйста, ожидайте, идет сбор данных')
 
-    parser_interface.set_telegram_data(token=token, chat_id="1019387985")
+    parser_interface.set_telegram_data(token=token, chat_id=message.chat.id)
     print(message.chat.id)
     file = await parser_interface.get_filename()
 
