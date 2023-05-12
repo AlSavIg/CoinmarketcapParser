@@ -33,8 +33,8 @@ class BotUI(QWidget):
 
         # Set background image
         self.background_label = QLabel(self)
-        # self.background_pixmap = QPixmap(f"jpg/background.jpg")
-        self.background_pixmap = QPixmap(f"{os.path.dirname(os.path.abspath(__file__))}/jpg/background.jpg")
+        self.background_pixmap = QPixmap(f"jpg/background.jpg")
+        # self.background_pixmap = QPixmap(f"{os.path.dirname(os.path.abspath(__file__))}/jpg/background.jpg")
         self.background_label.setPixmap(self.background_pixmap)
 
         # Define label at the top of the button
@@ -61,7 +61,7 @@ class BotUI(QWidget):
                 border-radius: 10px;
                 border-width: 2px;
                 border-color: #888888;
-                font-size: 16px;
+                font-size: 14px;
                 font-weight: bold;
             }
             QPushButton:hover {
@@ -108,8 +108,8 @@ class BotUI(QWidget):
 
     def bot_start_button_on_click(self):
         # Set text for the bottom label
-        self.msgLabel.setText('<h3 style="color: white;">Бот успешно запущен<p>'
-                              'Для его остановки закройте это окно</h3>')
+        self.msgLabel.setText('<h4 style="color: white;">Бот успешно запущен<p>'
+                              'Для его остановки закройте это окно</h4>')
         # self.msgThread.finished.connect(self.show_debug_console)
         self.bot_start_button.setEnabled(False)
         self.msgThread.start()
@@ -123,9 +123,11 @@ class BotUI(QWidget):
 
 
 def activate_gui():
+    if sys.platform == 'linux':
+        os.environ["QT_QPA_PLATFORM"] = "wayland"
     app = QApplication(sys.argv)
-    # app.setWindowIcon(QtGui.QIcon(f"jpg/icon.jpg"))
-    app.setWindowIcon(QtGui.QIcon(f"{os.path.dirname(os.path.abspath(__file__))}/jpg/icon.jpg"))
+    app.setWindowIcon(QtGui.QIcon(f"jpg/icon.jpg"))
+    # app.setWindowIcon(QtGui.QIcon(f"{os.path.dirname(os.path.abspath(__file__))}/jpg/icon.jpg"))
     bot_ui = BotUI()
     bot_ui.show()
     sys.exit(app.exec_())

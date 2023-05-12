@@ -1,2 +1,2 @@
-token = '5713731047:AAGn4FZd_HmO-Vvl4WS6f7IEpZXZA7MtOQA'
-chat_id = '1019387985'
+token = '5722752822:AAE-IF6YsuJTAQ29h1EifCP9mtv0rooBHe4'
+# chat_id = '1019387985'
